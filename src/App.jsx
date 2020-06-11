@@ -1,18 +1,17 @@
 import React from 'react';
-import './App.module.scss';
 import Layout from "./hoc/Layout";
+import Quiz from "./containers/Quiz";
+import './App.css'
 
 class App extends React.Component{
     render() {
-        const divStyles = {
-            border:'1px solid black',
-            width:400,
-        }
+        // const divStyles = {
+        //     border:'1px solid black',
+        //     width:400,
+        // }
         return (
             <Layout>
-                <div style={divStyles}>
-                    <h1>Layout</h1>
-                </div>
+                <Quiz/>
             </Layout>
         );
     }
