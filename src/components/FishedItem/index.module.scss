@@ -1,0 +1,26 @@
+.FinishedItem{
+  padding: 20px;
+  color: antiquewhite;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin: 0 10px;
+  ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li{
+      i{
+        margin-left: 10px;
+        &.success {
+          color: green;
+        }
+
+        &.error {
+          color: red;
+        }
+      }
+    }
+  }
+
+}
