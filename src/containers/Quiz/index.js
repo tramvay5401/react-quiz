@@ -1,56 +1,66 @@
-import React from "react";
+import React, {Component} from 'react'
 import classes from './index.module.scss'
-import ActiveQuiz from "../../components/ActiveQuiz";
+import ActiveQuiz from '../../components/ActiveQuiz'
 import FishedItem from "../../components/FishedItem";
 
-class Quiz extends React.Component {
+class Quiz extends Component {
     state = {
-        results: {},
-        activeQuestion: 0,
-        answerState: null,
+        results: {}, // {[id]: success error}
         isFinished: false,
+        activeQuestion: 0,
+        answerState: null, // { [id]: 'success' 'error' }
         quiz: [
             {
-                question: 'Who is you?',
+                question: 'Какого цвета небо?',
                 rightAnswerId: 2,
                 id: 1,
                 answers: [
-                    {text: 'Question 1', id: 1},
-                    {text: 'Question 2', id: 2},
-                    {text: 'Question 1', id: 3},
-                    {text: 'Question 1', id: 4},
+                    {text: 'Черный', id: 1},
+                    {text: 'Синий', id: 2},
+                    {text: 'Красный', id: 3},
+                    {text: 'Зеленый', id: 4}
                 ]
             },
             {
-                question: 'Who is you1?',
+                question: 'В каком году основали Санкт-Петербург?',
                 rightAnswerId: 3,
-                id: 1,
+                id: 2,
                 answers: [
-                    {text: 'Question 1', id: 1},
-                    {text: 'Question 1', id: 2},
-                    {text: 'Question 2', id: 3},
-                    {text: 'Question 1', id: 4},
+                    {text: '1700', id: 1},
+                    {text: '1702', id: 2},
+                    {text: '1703', id: 3},
+                    {text: '1803', id: 4}
                 ]
             }
         ]
     }
-    onAnswerClickHandler = (answerId) => {
+
+    onAnswerClickHandler = answerId => {
         if (this.state.answerState) {
             const key = Object.keys(this.state.answerState)[0]
             if (this.state.answerState[key] === 'success') {
                 return
             }
         }
+
         const question = this.state.quiz[this.state.activeQuestion]
         const results = this.state.results
+
         if (question.rightAnswerId === answerId) {
             if (!results[question.id]) {
                 results[question.id] = 'success'
             }
-            this.setState({answerState: {[answerId]: 'success'}, results: results})
+
+            this.setState({
+                answerState: {[answerId]: 'success'},
+                results
+            })
+
             const timeout = window.setTimeout(() => {
                 if (this.isQuizFinished()) {
-                    this.setState({isFinished: true})
+                    this.setState({
+                        isFinished: true
+                    })
                 } else {
                     this.setState({
                         activeQuestion: this.state.activeQuestion + 1,
@@ -61,7 +71,10 @@ class Quiz extends React.Component {
             }, 1000)
         } else {
             results[question.id] = 'error'
-            this.setState({answerState: {[answerId]: 'error'}, results: results})
+            this.setState({
+                answerState: {[answerId]: 'error'},
+                results
+            })
         }
     }
 
@@ -82,7 +95,8 @@ class Quiz extends React.Component {
         return (
             <div className={classes.Quiz}>
                 <div className={classes.QuizWrapper}>
-                    <h1>ASK this questions</h1>
+                    <h1>Ответьте на все вопросы</h1>
+
                     {
                         this.state.isFinished
                             ? <FishedItem
@@ -104,5 +118,6 @@ class Quiz extends React.Component {
         )
     }
 }
+
 
 export default Quiz

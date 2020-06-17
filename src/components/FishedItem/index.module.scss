@@ -13,11 +13,11 @@
       i{
         margin-left: 10px;
         &.success {
-          color: green;
+          color: rgba(161,240,69, .7);
         }
 
         &.error {
-          color: red;
+          color: rgba(240, 87, 108, .7);
         }
       }
     }
