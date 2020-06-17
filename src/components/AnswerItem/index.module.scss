@@ -1,11 +1,20 @@
-.AnswerItem{
+.AnswerItem {
   border: 2px solid wheat;
   border-radius: 7px;
   padding: 5px 10px;
   margin-bottom: 5px;
   cursor: pointer;
-  &:hover{
-    background: rgba(255,255,255, .2);
+
+  &:hover {
+    background: rgba(255, 255, 255, .2);
     transition: background .3s ease-in-out;
+  }
+
+  &.success {
+    background: green;
+  }
+
+  &.error {
+    background: red;
   }
 }
