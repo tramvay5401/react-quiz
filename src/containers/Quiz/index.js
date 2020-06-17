@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import classes from './index.module.scss'
 import ActiveQuiz from '../../components/ActiveQuiz'
 import FishedItem from "../../components/FishedItem";
+import axios from '../../axios/axios'
+import Spinner from "../../components/UI/Spinner";
 
 class Quiz extends Component {
     state = {
@@ -9,30 +11,8 @@ class Quiz extends Component {
         isFinished: false,
         activeQuestion: 0,
         answerState: null, // { [id]: 'success' 'error' }
-        quiz: [
-            {
-                question: 'Какого цвета небо?',
-                rightAnswerId: 2,
-                id: 1,
-                answers: [
-                    {text: 'Черный', id: 1},
-                    {text: 'Синий', id: 2},
-                    {text: 'Красный', id: 3},
-                    {text: 'Зеленый', id: 4}
-                ]
-            },
-            {
-                question: 'В каком году основали Санкт-Петербург?',
-                rightAnswerId: 3,
-                id: 2,
-                answers: [
-                    {text: '1700', id: 1},
-                    {text: '1702', id: 2},
-                    {text: '1703', id: 3},
-                    {text: '1803', id: 4}
-                ]
-            }
-        ]
+        quiz: [],
+        loading:true
     }
 
     onAnswerClickHandler = answerId => {
@@ -91,6 +71,18 @@ class Quiz extends Component {
         })
     }
 
+   async  componentDidMount() {
+        try {
+            const res = await axios.get(`/quizes/${this.props.match.params.id}.json`)
+            const quiz = res.data
+            this.setState({
+                quiz,
+                loading:false
+            })
+        }catch (e) {
+            console.log(e)
+        }
+    }
     render() {
         return (
             <div className={classes.Quiz}>
@@ -98,7 +90,9 @@ class Quiz extends Component {
                     <h1>Ответьте на все вопросы</h1>
 
                     {
-                        this.state.isFinished
+                        this.state.loading
+                        ?<Spinner/>
+                        :this.state.isFinished
                             ? <FishedItem
                                 results={this.state.results}
                                 quiz={this.state.quiz}
@@ -118,6 +112,4 @@ class Quiz extends Component {
         )
     }
 }
-
-
 export default Quiz
